@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SosMed Mahasiswa Untar</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Header -->
+    <header>
+      <input type="checkbox" id="toggler" />
+      <label for="toggler" class="fas fa-bars"></label>
+
+      <a href="#" class="logo">SosMed Mahasiswa Untar<span>.</span></a>
+      <nav class="navbar">
+        <a href="#profile" id="btn-profile">Profile</a>
+        <a href="#logout" id="btn-logout">Logout</a>
+        <a href="#home" id="btn-home">Home</a>
+        <a href="#chat" id="btn-chat">Chat</a>
+      </nav>
+    </header>
+
+    <!-- Home Section -->
+    <section class="home" id="home">
+      <div class="content">
+        <h3>Sosial Media Mahasiswa</h3>
+        <span>
+          Platform sosial media khusus mahasiswa. Di sini kamu bisa terhubung
+          dengan teman kampus, berbagi pengalaman, berdiskusi seputar
+          perkuliahan, hingga mengikuti informasi terbaru tentang kegiatan
+          akademik maupun organisasi. Melalui fitur profil, postingan, dan
+          komunitas, setiap mahasiswa dapat mengekspresikan diri serta
+          memperluas jaringan pertemanan secara positif dan bermanfaat.
+        </span>
+      </div>
+    </section>
+
+    <!-- Main -->
+    <main id="mainContent">
+      <section class="profile-page">
+        <div class="profile-header">
+          <img id="profilePicture" src="images/profile.png" alt="Foto Profil" />
+          <h3 id="profileName"></h3>
+        </div>
+
+        <!-- Create Post -->
+        <section class="create-post">
+          <img src="images/profile.png" alt="Foto Profil" />
+          <div class="create-post-content">
+            <textarea
+              id="postInput"
+              placeholder="Apa yang kamu pikirkan?"
+            ></textarea>
+            <button id="postBtn">Posting</button>
+          </div>
+        </section>
+
+        <!-- Feed -->
+        <section class="feed" id="feed"></section>
+      </section>
+    </main>
+
+    <script>
+      // Cek login
+      const activeUser = localStorage.getItem("activeUser");
+      if (!activeUser) {
+        window.location.href = "login.html";
+      }
+
+      const profileName = document.getElementById("profileName");
+      profileName.textContent = activeUser;
+
+      const postBtn = document.getElementById("postBtn");
+      const postInput = document.getElementById("postInput");
+      const feed = document.getElementById("feed");
+      const btnLogout = document.getElementById("btn-logout");
+
+      // Posting
+      postBtn.addEventListener("click", () => {
+        const text = postInput.value.trim();
+        if (text !== "") {
+          const post = document.createElement("div");
+          post.classList.add("post");
+          post.innerHTML = `
+            <div class="post-header">
+              <img src="images/profile.png" alt="Foto Profil">
+              <h3>${activeUser}</h3>
+            </div>
+            <p>${text}</p>
+          `;
+          feed.prepend(post);
+          postInput.value = "";
+        }
+      });
+
+      // Logout
+      btnLogout.addEventListener("click", () => {
+        localStorage.removeItem("activeUser");
+        window.location.href = "login.html";
+      });
+    </script>
+  </body>
+</html>

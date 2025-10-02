@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login SosialKu</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="auth-container">
+      <h2>Selamat Datang di SosialKu</h2>
+      <input type="text" id="usernameInput" placeholder="Nama Pengguna" />
+      <input type="password" id="passwordInput" placeholder="Password" />
+      <button id="loginBtn">Login</button>
+      <button id="signupBtn">Sign Up</button>
+    </div>
+
+    <script>
+      const usernameInput = document.getElementById("usernameInput");
+      const passwordInput = document.getElementById("passwordInput");
+      const loginBtn = document.getElementById("loginBtn");
+      const signupBtn = document.getElementById("signupBtn");
+
+      let users = JSON.parse(localStorage.getItem("users") || "{}");
+
+      loginBtn.addEventListener("click", () => {
+        const username = usernameInput.value.trim();
+        const password = passwordInput.value.trim();
+        if (!username || !password) return alert("Isi semua data!");
+
+        if (users[username] && users[username] === password) {
+          localStorage.setItem("activeUser", username);
+          window.location.href = "index.html";
+        } else {
+          alert("Username atau password salah!");
+        }
+      });
+
+      signupBtn.addEventListener("click", () => {
+        const username = usernameInput.value.trim();
+        const password = passwordInput.value.trim();
+        if (!username || !password) return alert("Isi semua data!");
+
+        if (users[username]) {
+          alert("Username sudah terdaftar!");
+        } else {
+          users[username] = password;
+          localStorage.setItem("users", JSON.stringify(users));
+          localStorage.setItem("activeUser", username);
+          window.location.href = "index.html";
+        }
+      });
+    </script>
+  </body>
+</html>
