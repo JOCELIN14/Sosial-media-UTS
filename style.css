@@ -295,3 +295,109 @@ main {
   font-weight: bold;
   color: #333;
 }
+
+header .navbar .search-bar {
+  display: flex;
+  align-items: center;
+  background-color: #e4e6eb; 
+  border-radius: 50px; 
+  padding: 0.5rem 1.5rem;
+  margin-left: 1.5rem; 
+}
+
+header .navbar .search-bar input {
+  background: transparent;
+  width: 100%;
+  font-size: 1.6rem; 
+  color: #333;
+}
+
+header .navbar .search-bar button {
+  background: transparent;
+  cursor: pointer;
+  font-size: 1.6rem;
+  color: #666;
+}
+
+
+.search-result-section {
+  padding-top: 8rem; 
+  background-color: #f0f2f5;
+  min-height: 100vh;
+}
+
+.search-result-section h3 {
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.search-results {
+  max-width: 800px; 
+  margin: 0 auto;
+  display: grid;
+
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 2rem; 
+}
+
+.user-card, .post-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  text-align: center; 
+}
+
+.user-card img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 1rem;
+}
+
+.user-card h4 {
+  font-size: 1.6rem;
+  color: #333;
+  margin: 0;
+}
+
+.user-card p {
+  font-size: 1.4rem;
+  color: #65676b;
+}
+
+.post-card {
+  text-align: left;
+}
+
+.post-card .post-author {
+  font-weight: bold;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.post-card .post-content {
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+}
+
+.post-card .post-tags {
+  font-size: 1.2rem;
+  color: var(--pink); 
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  header .navbar .search-bar {
+    width: 90%;
+    margin: 1.5rem;
+    padding: 1rem 1.5rem;
+  }
+} 
+
+#search-input {
+  text-transform: none;
+}
