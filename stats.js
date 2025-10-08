@@ -1,24 +1,35 @@
 const posts = JSON.parse(localStorage.getItem("posts")) || [];
 const activeUser = localStorage.getItem("activeUser");
 
-const userPosts = posts.filter(p => p.author === activeUser);
+const userPosts = posts.filter((p) => p.author === activeUser);
 const totalPosts = userPosts.length;
-const totalLikes = userPosts.reduce((sum, p) => sum + (p.likes?.length || 0), 0);
-const totalComments = userPosts.reduce((sum, p) => sum + (p.comments?.length || 0), 0);
+const totalLikes = userPosts.reduce(
+  (sum, p) => sum + (p.likes?.length || 0),
+  0
+);
+const totalComments = userPosts.reduce(
+  (sum, p) => sum + (p.comments?.length || 0),
+  0
+);
 
 document.getElementById("postCount").textContent = totalPosts;
 document.getElementById("likeCount").textContent = totalLikes;
 document.getElementById("commentCount").textContent = totalComments;
 
-const popular = [...userPosts].sort((a, b) => 
-  (b.likes?.length || 0) + (b.comments?.length || 0) - ((a.likes?.length || 0) + (a.comments?.length || 0))
-).slice(0, 3);
+const popular = [...userPosts]
+  .sort(
+    (a, b) =>
+      (b.likes?.length || 0) +
+      (b.comments?.length || 0) -
+      ((a.likes?.length || 0) + (a.comments?.length || 0))
+  )
+  .slice(0, 3);
 
 const popularList = document.getElementById("popularPosts");
 if (popular.length === 0) {
   popularList.innerHTML = "<p>No Posts</p>";
 } else {
-  popular.forEach(p => {
+  popular.forEach((p) => {
     const el = document.createElement("div");
     el.classList.add("post-item");
     el.innerHTML = `
@@ -103,4 +114,11 @@ CanvasRenderingContext2D.prototype.roundRect = function (x, y, w, h, r) {
 
 drawChart();
 
-
+// Navigasi ke halaman profile
+const btnProfile = document.getElementById("btn-profile");
+if (btnProfile) {
+  btnProfile.addEventListener("click", (e) => {
+    e.preventDefault();
+    window.location.href = "profile.html";
+  });
+}
