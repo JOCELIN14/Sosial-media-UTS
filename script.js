@@ -144,6 +144,7 @@ postBtn.addEventListener("click", () => {
   }
 });
 
+<<<<<<< HEAD
 document.addEventListener('DOMContentLoaded', () => {
     const semuaUser = [
         { id: 1, username: 'jocelin', name: 'Jocelin K.', profilePic: 'https://i.pravatar.cc/150?u=jocelin' },
@@ -223,6 +224,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+=======
 feed.addEventListener('click', (e) => {
     const target = e.target;
     const postElement = target.closest('.post');
@@ -302,3 +304,4 @@ btnLogout.addEventListener("click", () => {
 
 profileName.textContent = activeUser;
 document.addEventListener('DOMContentLoaded', renderFeed);
+>>>>>>> e54095a72c595a6f97aeda863ee49a56ca90a682
