@@ -29,9 +29,15 @@
       <a href="#" class="logo">SosMed Mahasiswa Untar<span>.</span></a>
 
       <nav class="navbar">
-        <a href="#" id="btn-profile"><i class="fas fa-user-circle"></i></a>
+        <a href="notification.html" class="notification-bell" id="notificationBell">
+          <i class="fas fa-bell"></i>
+          <span class="notification-badge" id="notificationBadge"></span>
+        </a>
+
+        <a href="profile.html" id="btn-profile"><i class="fas fa-user-circle"></i></a>
         <a href="#" id="btn-logout"><i class="fas fa-sign-out-alt"></i></a>
         <a href="#home" id="btn-home"><i class="fas fa-home"></i></a>
+        <a href="chat.html" id="btn-chat"><i class="fas fa-comments"></i></a>
         <a href="stats.html" class="btn-stats"
           ><i class="fas fa-chart-bar"></i
         ></a>
@@ -67,8 +73,7 @@
     <section class="users-section">
       <h3>Akun Terdaftar</h3>
       <div id="usersList" class="users-list">
-        <!-- Daftar pengguna akan dimuat di sini -->
-      </div>
+        </div>
     </section>
 
     <!-- SEARCH RESULT SECTION -->
@@ -135,6 +140,7 @@
     </div>
 
     <script src="script.js"></script>
+    <script src="profile.js"></script>
     <script>
       document
         .getElementById("search-form")
@@ -142,9 +148,7 @@
           e.preventDefault();
           window.location.href = "search.html";
         });
-    </script>
-    /
-    <script>
+
       window.addEventListener("load", () => {
         const savedFoto = localStorage.getItem("fotoProfil");
         if (savedFoto) {
@@ -156,7 +160,5 @@
         }
       });
     </script>
-    <script src="script.js"></script>
-    <script src="profile. js"></script>
   </body>
 </html>

@@ -1,3 +1,25 @@
+function createNotification(targetUser, fromUser, type, postId = null) {
+  if (targetUser === fromUser) {
+    return;
+  }
+  let allUsers = JSON.parse(localStorage.getItem("users")) || {};
+  if (!allUsers[targetUser]) {
+    allUsers[targetUser] = { notifications: [] };
+  } else if (!allUsers[targetUser].notifications) {
+    allUsers[targetUser].notifications = [];
+  }
+  const newNotification = {
+    id: Date.now(),
+    type: type,
+    fromUser: fromUser,
+    postId: postId,
+    read: false,
+    timestamp: new Date().toISOString()
+  };
+  allUsers[targetUser].notifications.unshift(newNotification);
+  localStorage.setItem("users", JSON.stringify(allUsers));
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   const activeUser = localStorage.getItem("activeUser");
   if (!activeUser) {
@@ -51,7 +73,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const userData = users[u];
     return {
       username: u,
-      name: u,
+      name: userData.name || u,
       profilePic: userData.profilePic || defaultProfilePic,
     };
   });
@@ -78,6 +100,8 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       // Follow
       following.push(targetUsername);
+      // Notifikasi - trigger untuk follow
+      createNotification(targetUsername, activeUser, 'follow');
       btn.textContent = "Unfollow";
       btn.classList.add("unfollow");
     }
@@ -138,36 +162,46 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   };
 
+  // Initial display
   tampilkanHasil();
 
+  // Search form submit event
   searchForm.addEventListener("submit", (e) => {
     e.preventDefault();
     tampilkanHasil(searchInput.value.trim());
   });
-});
-// EVENT LISTENER UNTUK LOGOUT
-btnLogout.addEventListener("click", () => {
-  localStorage.removeItem("activeUser");
-  window.location.href = "login.html";
-});
-// EVENT LISTENER UNTUK HOME
-btn -
-  home.addEventListener("click", () => {
-    localStorage.removeItem("activeUser");
-    window.location.href = "index.html";
-  });
 
-const btnProfile = document.getElementById("btn-profile");
-if (btnProfile) {
-  btnProfile.addEventListener("click", (e) => {
-    e.preventDefault();
-    window.location.href = "profile.html";
-  });
-}
-const btnChat = document.getElementById("btn-chat");
-if (btnHome) {
-  btnHome.addEventListener("click", (e) => {
-    e.preventDefault();
-    window.location.href = "chat.html";
-  });
-}
+  setupNotifications();
+
+  const btnLogout = document.getElementById("btn-logout");
+  if(btnLogout) {
+    btnLogout.addEventListener("click", () => {
+      localStorage.removeItem("activeUser");
+      window.location.href = "login.html";
+    });
+  }
+
+  const btnProfile = document.getElementById("btn-profile");
+  if (btnProfile) {
+    btnProfile.addEventListener("click", (e) => {
+      e.preventDefault();
+      window.location.href = "profile.html";
+    });
+  }
+  
+  const btnHome = document.getElementById("btn-home");
+  if (btnHome) {
+      btnHome.addEventListener("click", (e) => {
+          e.preventDefault();
+          window.location.href = "index.html";
+      });
+  }
+
+  const btnChat = document.getElementById("btn-chat");
+  if (btnChat) {
+    btnChat.addEventListener("click", (e) => {
+      e.preventDefault();
+      window.location.href = "chat.html";
+    });
+  }
+});

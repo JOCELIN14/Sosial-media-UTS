@@ -4,16 +4,16 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Profil Saya - SosMed Mahasiswa Untar</title>
-     <script>
-    (function() {
-      const theme = localStorage.getItem("themePreference");
-      if (theme === "dark") {
-        document.documentElement.classList.add("dark-mode");
-      } else {
-        document.documentElement.classList.add("light-mode");
-      }
-    })();
-  </script>
+      <script>
+      (function() {
+        const theme = localStorage.getItem("themePreference");
+        if (theme === "dark") {
+          document.documentElement.classList.add("dark-mode");
+        } else {
+          document.documentElement.classList.add("light-mode");
+        }
+      })();
+    </script>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
@@ -22,20 +22,30 @@
   </head>
   <body>
     <header>
+      <input type="checkbox" id="toggler" />
+      <label for="toggler" class="fas fa-bars"></label>
+
+      <a href="index.html" class="logo">SosMed Mahasiswa Untar<span>.</span></a>
+
       <nav class="navbar">
-        <a href="#" id="btn-profile"><i class="fas fa-user-circle"></i></a>
+        <a href="notification.html" class="notification-bell" id="notificationBell">
+          <i class="fas fa-bell"></i>
+          <span class="notification-badge" id="notificationBadge"></span>
+        </a>
+
+        <a href="profile.html" id="btn-profile"><i class="fas fa-user-circle"></i></a>
         <a href="#" id="btn-logout"><i class="fas fa-sign-out-alt"></i></a>
         <a href="index.html" id="btn-home"><i class="fas fa-home"></i></a>
+        <a href="chat.html" id="btn-chat"><i class="fas fa-comments"></i></a>
         <a href="stats.html" class="btn-stats"
           ><i class="fas fa-chart-bar"></i
         ></a>
-        <a href="setting.html"id="btn-setting"><i class="fas fa-cog"></i></a>
+        <a href="setting.html" id="btn-setting"><i class="fas fa-cog"></i></a>
       </nav>
     </header>
 
     <main class="profile-page-container">
-      <section class="profile-section"></section>
-
+      <section class="profile-section">
         <div class="profile-content">
           <div class="profile-picture-wrapper">
             <img
@@ -88,6 +98,7 @@
         </div>
       </div>
     </main>
+    <script src="script.js"></script>
     <script src="profile.js"></script>
   </body>
 </html>

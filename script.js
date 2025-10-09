@@ -6,6 +6,75 @@ if (!activeUser) {
 let users = JSON.parse(localStorage.getItem("users")) || {};
 let posts = JSON.parse(localStorage.getItem("posts")) || [];
 
+function createNotification(targetUser, fromUser, type, postId = null) {
+  if (targetUser === fromUser) {
+    return;
+  }
+
+  let allUsers = JSON.parse(localStorage.getItem("users")) || {};
+  
+  if (!allUsers[targetUser]) {
+    allUsers[targetUser] = { notifications: [] };
+  } else if (!allUsers[targetUser].notifications) {
+    allUsers[targetUser].notifications = [];
+  }
+
+  const newNotification = {
+    id: Date.now(),
+    type: type,
+    fromUser: fromUser,
+    postId: postId,
+    read: false,
+    timestamp: new Date().toISOString()
+  };
+
+  allUsers[targetUser].notifications.unshift(newNotification);
+
+  localStorage.setItem("users", JSON.stringify(allUsers));
+}
+
+function setupNotifications() {
+  const allUsers = JSON.parse(localStorage.getItem("users")) || {};
+  const currentUser = allUsers[activeUser];
+  const notifications = currentUser?.notifications || [];
+
+  const badge = document.getElementById('notificationBadge');
+
+  if (!badge) {
+    return; // Badge not on this page
+  }
+
+  const unreadCount = notifications.filter(n => !n.read).length;
+
+  if (unreadCount > 0) {
+    badge.classList.add('show');
+  } else {
+    badge.classList.remove('show');
+  }
+}
+
+  bell.addEventListener('click', (e) => {
+    e.preventDefault();
+    dropdown.classList.toggle('show');
+
+    if (dropdown.classList.contains('show') && unreadCount > 0) {
+      currentUser.notifications.forEach(n => n.read = true);
+      allUsers[activeUser] = currentUser;
+      localStorage.setItem('users', JSON.stringify(allUsers));
+      
+      setTimeout(() => {
+        badge.classList.remove('show');
+      }, 2000);
+    }
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!bell.contains(e.target) && !dropdown.contains(e.target)) {
+        dropdown.classList.remove('show');
+    }
+  });
+
+
 const profileName = document.getElementById("profileName");
 const postBtn = document.getElementById("postBtn");
 const postInput = document.getElementById("postInput");
@@ -252,8 +321,12 @@ feed.addEventListener("click", (e) => {
 
   if (target.closest(".like-btn") && postIndex > -1) {
     const likedIndex = posts[postIndex].likes.indexOf(activeUser);
-    if (likedIndex > -1) posts[postIndex].likes.splice(likedIndex, 1);
-    else posts[postIndex].likes.push(activeUser);
+    if (likedIndex > -1) {
+        posts[postIndex].likes.splice(likedIndex, 1);
+    } else {
+        posts[postIndex].likes.push(activeUser);
+        createNotification(posts[postIndex].author, activeUser, 'like', postId);
+    }
     localStorage.setItem("posts", JSON.stringify(posts));
     renderFeed();
   } else if (
@@ -264,6 +337,7 @@ feed.addEventListener("click", (e) => {
     const commentText = commentInput.value.trim();
     if (commentText) {
       posts[postIndex].comments.push({ author: activeUser, text: commentText });
+      createNotification(posts[postIndex].author, activeUser, 'comment', postId);
       localStorage.setItem("posts", JSON.stringify(posts));
       commentInput.value = "";
       renderFeed();
@@ -278,6 +352,7 @@ feed.addEventListener("click", (e) => {
       users[activeUser].following.splice(followingIndex, 1);
     } else {
       users[activeUser].following.push(authorToFollow);
+      createNotification(authorToFollow, activeUser, 'follow');
     }
     localStorage.setItem("users", JSON.stringify(users));
     renderFeed();
@@ -346,6 +421,7 @@ profileName.textContent = activeUser;
 document.addEventListener("DOMContentLoaded", () => {
   renderFeed();
   renderUsersList();
+  setupNotifications();
 
   if (!users[activeUser]) {
     users[activeUser] = { following: [] };
@@ -404,8 +480,8 @@ const updateAllProfilePictures = (username, imageUrl) => {
   });
 };
 const btnChat = document.getElementById("btn-chat");
-if (btnHome) {
-  btnHome.addEventListener("click", (e) => {
+if (btnChat) {
+  btnChat.addEventListener("click", (e) => {
     e.preventDefault();
     window.location.href = "chat.html";
   });

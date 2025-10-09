@@ -113,7 +113,12 @@
       <a href="index.html" class="logo">SosMed Mahasiswa Untar<span>.</span></a>
 
       <nav class="navbar">
-        <a href="index.html" id="btn-profile"
+        <a href="notification.html" class="notification-bell" id="notificationBell">
+          <i class="fas fa-bell"></i>
+          <span class="notification-badge" id="notificationBadge"></span>
+        </a>
+
+        <a href="profile.html" id="btn-profile"
           ><i class="fas fa-user-circle"></i
         ></a>
         <a href="index.html" id="btn-logout"
@@ -206,7 +211,7 @@
 
       // Tautan ke Home dan Profile
       document.getElementById("btn-home").href = "index.html";
-      document.getElementById("btn-profile").href = "index.html";
+      document.getElementById("btn-profile").href = "profile.html";
 
       // --- Logika Dummy Chat ---
       const contactList = document.getElementById("contactList");
@@ -259,21 +264,28 @@
           // Ganti header chat
           const partnerName = item.querySelector("span").textContent;
           currentChatHeader.innerHTML = `
-              <img src="images/profile.png" alt="${partnerName}" style="width: 30px; height: 30px; margin-right: 10px; border-radius: 50%;">
-              <span>${partnerName}</span>
-          `;
+                <img src="images/profile.png" alt="${partnerName}" style="width: 30px; height: 30px; margin-right: 10px; border-radius: 50%;">
+                <span>${partnerName}</span>
+              `;
 
           // Kosongkan dan tampilkan pesan dummy baru
           chatMessages.innerHTML = `
-             <div style="text-align: center; color: #888; padding: 10px;">Anda memulai chat dengan ${partnerName}</div>
-             <div class="message receiver">Hai!</div>
-             <div class="message sender">Siap! Ada perlu apa?</div>
-          `;
+                <div style="text-align: center; color: #888; padding: 10px;">Anda memulai chat dengan ${partnerName}</div>
+                <div class="message receiver">Hai!</div>
+                <div class="message sender">Siap! Ada perlu apa?</div>
+              `;
         });
       });
 
       // Pilih kontak pertama saat halaman dimuat
       contactList.querySelector(".contact-item").click();
+    </script>
+    
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            setupNotifications();
+        });
     </script>
   </body>
 </html>
