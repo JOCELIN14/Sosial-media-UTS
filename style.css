@@ -35,7 +35,7 @@ body {
   padding: 30px;
   background: white;
   border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -44,7 +44,8 @@ body {
 .auth-container h2 {
   text-align: center;
   font-size: 2rem;
-  margin-bottom: 10px;
+  margin-bottom: 1.5rem;
+  color: var(--pink);
 }
 
 .auth-container input {
@@ -69,6 +70,20 @@ body {
 .auth-container button:hover {
   background: #d63384;
 }
+.auth-container p {
+  font-size: 0.9rem;
+  margin-top: 15px;
+}
+
+.auth-container a {
+  color: #6c63ff;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.auth-container a:hover {
+  text-decoration: underline;
+}
 /* Header */
 header {
   position: fixed;
@@ -82,16 +97,22 @@ header {
   padding: 2rem 9%;
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
   z-index: 1000;
+  flex-wrap: wrap;
 }
 header .logo {
   font-size: 3rem;
   color: #333;
   font-weight: bolder;
+  white-space: nowrap;
 }
 header .logo span {
   color: var(--pink);
 }
-
+header .navbar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
 header .navbar a {
   font-size: 2rem;
   padding: 1.5rem;
@@ -158,27 +179,70 @@ header .fa-bars {
 }
 
 .home {
+  position: relative;
   display: flex;
   flex-wrap: wrap;
-  gap: 3rem;
-  min-height: 100vh;
-  background: Url("images/home-bg.jpg") no-repeat;
-  background-size: cover;
-  background-position: center;
   align-items: center;
-  color: black;
-  font-size: 2rem;
-  text-shadow: 0.5px 0.5px 1px rgba(223, 156, 168, 0.7);
+  justify-content: center;
+  min-height: 100vh;
+  gap: 3rem;
+  background: url("images/home-bg.jpg") no-repeat center center / cover;
+  color: white;
+  font-size: 1.5rem;
+  text-shadow: 0.5px 0.5px 3px rgba(0, 0, 0, 0.7);
+  padding: 5rem 2rem;
+  box-sizing: border-box;
+  overflow: hidden;
 }
+
+/* Overlay agar teks tidak nabrak background */
 .home::before {
   content: "";
   position: absolute;
   top: 0;
   left: 0;
-  height: 100%;
   width: 100%;
-  background: rgba(255, 255, 255, 0.3);
-  z-index: 0;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.55); /* lapisan gelap transparan */
+  z-index: 1;
+}
+
+/* Konten teks di atas overlay */
+.home .content {
+  position: relative;
+  z-index: 2;
+  max-width: 800px;
+  text-align: center;
+}
+
+.home .content h1 {
+  font-size: 3rem;
+  color: #ff6fae;
+  margin-bottom: 1rem;
+}
+
+.home .content p {
+  line-height: 1.6;
+  color: #f8f8f8;
+  margin-bottom: 2rem;
+}
+
+/* Tombol CTA */
+.home .content a {
+  display: inline-block;
+  background: #ff6fae;
+  color: white;
+  padding: 0.8rem 1.8rem;
+  border-radius: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  box-shadow: 0 4px 10px rgba(255, 111, 174, 0.4);
+  transition: all 0.3s ease;
+}
+
+.home .content a:hover {
+  background: #ff3e95;
+  box-shadow: 0 6px 18px rgba(255, 111, 174, 0.6);
 }
 
 /* Main */
@@ -278,9 +342,9 @@ main {
 }
 
 .post p {
-    font-size: 1.4rem;
-    line-height: 1.5;
-    color: #333;
+  font-size: 1.4rem;
+  line-height: 1.5;
+  color: #333;
 }
 
 .profile-header {
@@ -307,16 +371,16 @@ main {
 header .navbar .search-bar {
   display: flex;
   align-items: center;
-  background-color: #e4e6eb; 
-  border-radius: 50px; 
+  background-color: #e4e6eb;
+  border-radius: 50px;
   padding: 0.5rem 1.5rem;
-  margin-left: 1.5rem; 
+  margin-left: 1.5rem;
 }
 
 header .navbar .search-bar input {
   background: transparent;
   width: 100%;
-  font-size: 1.6rem; 
+  font-size: 1.6rem;
   color: #333;
 }
 
@@ -327,9 +391,8 @@ header .navbar .search-bar button {
   color: #666;
 }
 
-
 .search-result-section {
-  padding-top: 8rem; 
+  padding-top: 8rem;
   background-color: #f0f2f5;
   min-height: 100vh;
 }
@@ -342,20 +405,21 @@ header .navbar .search-bar button {
 }
 
 .search-results {
-  max-width: 800px; 
+  max-width: 800px;
   margin: 0 auto;
   display: grid;
 
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 2rem; 
+  gap: 2rem;
 }
 
-.user-card, .post-card {
+.user-card,
+.post-card {
   background: white;
   border-radius: 12px;
   padding: 1.5rem;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  text-align: center; 
+  text-align: center;
 }
 
 .user-card img {
@@ -394,7 +458,7 @@ header .navbar .search-bar button {
 
 .post-card .post-tags {
   font-size: 1.2rem;
-  color: var(--pink); 
+  color: var(--pink);
   font-weight: bold;
 }
 
@@ -404,7 +468,7 @@ header .navbar .search-bar button {
     margin: 1.5rem;
     padding: 1rem 1.5rem;
   }
-} 
+}
 
 #search-input {
   text-transform: none;
@@ -545,7 +609,7 @@ header .navbar .search-bar button {
   width: 100%;
   height: 100%;
   overflow: auto;
-  background-color: rgba(0,0,0,0.5);
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .modal-content {
@@ -754,4 +818,528 @@ header .navbar .search-bar button {
   .stats-card h3 {
     font-size: 2rem;
   }
+}
+
+/* ==============================
+   👤 PROFILE PAGE
+============================== */
+.cover-photo {
+  width: 100%;
+  height: 200px;
+  background: linear-gradient(135deg, #6c63ff, #a084ff);
+  border-radius: 12px 12px 0 0;
+  position: relative;
+  gap: 20rem;
+}
+
+.profile-content {
+  background: #fff;
+  border-radius: 0 0 12px 12px;
+  padding: 2.5rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: -10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.profile-picture-wrapper {
+  position: relative;
+  width: 150px;
+  height: 150px;
+}
+
+.profile-picture-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 5px solid #fff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+#changePicBtn {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  background: #ff4757;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  padding: 6px;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.profile-info {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.profile-info h2 {
+  font-size: 1.4rem;
+  color: #222;
+  margin: 5px 0;
+}
+
+.profile-info p {
+  color: #555;
+  margin: 4px 0 10px;
+}
+
+.profile-stats {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin: 0.5rem 0;
+}
+
+.profile-stats a {
+  color: #333;
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+.profile-stats a strong {
+  font-weight: 600;
+}
+
+.edit-btn {
+  background: #007bff;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: background 0.3s;
+}
+
+.edit-btn:hover {
+  background: #0056b3;
+}
+.edit-form {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  width: 350px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+.edit-form h3 {
+  margin-top: 0;
+  color: #333;
+}
+
+.edit-form label {
+  display: block;
+  text-align: left;
+  margin-top: 10px;
+  color: #555;
+  font-size: 0.9rem;
+}
+
+.edit-form input,
+.edit-form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 0.95rem;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.save-btn {
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 8px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.cancel-btn {
+  background: #dc3545;
+  color: white;
+  border: none;
+  padding: 8px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.hidden {
+  display: none;
+}
+
+/* ==============================
+   📱 RESPONSIVE
+============================== */
+@media (max-width: 991px) {
+  html {
+    font-size: 55%;
+  }
+  header {
+    padding: 2rem;
+  }
+  section {
+    padding: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  header .fa-bars {
+    display: inline-block;
+  }
+  header .navbar {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #eee;
+    border-top: 0.1rem solid rgba(0, 0, 0, 0.1);
+    clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+    transition: clip-path 0.3s ease-in-out;
+  }
+  header #toggler:checked ~ .navbar {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+  header .navbar a {
+    margin: 1.5rem;
+    padding: 1.5rem;
+    background: #fff;
+    border: 0.1rem solid rgba(0, 0, 0, 0.1);
+    display: block;
+  }
+  header .navbar .search-bar {
+    width: auto;
+    margin: 1.5rem;
+    padding: 1rem 1.5rem;
+  }
+
+  .cover-photo {
+    height: 160px;
+  }
+
+  .profile-picture-wrapper {
+    width: 120px;
+    height: 120px;
+  }
+
+  .profile-info h2 {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 450px) {
+  html {
+    font-size: 50%;
+  }
+}
+/* ==========================
+   EDIT PROFILE MODAL / FORM
+========================== */
+.edit-profile-container {
+  max-width: 500px;
+  margin: 40px auto;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  position: relative;
+  z-index: 10;
+}
+
+.edit-profile-container h2 {
+  text-align: center;
+  font-size: 2.4rem;
+  color: #333;
+  margin-bottom: 1.5rem;
+  font-weight: bold;
+}
+
+.edit-profile-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.edit-profile-form label {
+  font-size: 1.4rem;
+  color: #444;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+}
+
+.edit-profile-form input,
+.edit-profile-form textarea,
+.edit-profile-form select {
+  width: 100%;
+  padding: 1rem 1.2rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1.4rem;
+  color: #333;
+  background-color: #fafafa;
+  resize: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.edit-profile-form input:focus,
+.edit-profile-form textarea:focus,
+.edit-profile-form select:focus {
+  border-color: var(--pink);
+  box-shadow: 0 0 0 3px rgba(232, 67, 147, 0.15);
+  background-color: #fff;
+}
+
+.edit-profile-form button {
+  background: var(--pink);
+  color: #fff;
+  border: none;
+  padding: 1rem;
+  font-size: 1.6rem;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.edit-profile-form button:hover {
+  background: #d63384;
+}
+
+/* Tombol cancel */
+.edit-profile-form .btn-cancel {
+  background: #ccc;
+  color: #333;
+}
+
+.edit-profile-form .btn-cancel:hover {
+  background: #aaa;
+}
+
+/* Jika tampil sebagai modal pop-up */
+.edit-modal {
+  display: none; /* default: tersembunyi */
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 999;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+
+.edit-modal.active {
+  display: flex;
+}
+
+/* Responsif */
+@media (max-width: 576px) {
+  .edit-profile-container {
+    width: 100%;
+    margin: 2rem;
+    padding: 1.5rem;
+  }
+  .edit-profile-form input,
+  .edit-profile-form textarea {
+    font-size: 1.3rem;
+  }
+}
+.users-section {
+  margin: 20px 15px;
+  padding: 15px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.users-section h3 {
+  margin-bottom: 15px;
+  color: #333;
+  font-size: 16px;
+}
+
+.users-list {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.user-list-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  border-bottom: 1px solid #f0f0f0;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.user-list-item:hover {
+  background-color: #f8f8f8;
+}
+
+.user-list-item:last-child {
+  border-bottom: none;
+}
+
+.user-list-item img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.user-info {
+  flex: 1;
+}
+
+.user-name {
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 2px;
+}
+
+.user-username {
+  color: #666;
+  font-size: 12px;
+}
+
+.user-follow-status {
+  font-size: 11px;
+  color: #3897f0;
+  margin-top: 2px;
+}
+/*SETTINGS*/
+
+.settings-page {
+  max-width: 600px;
+  margin: 100px auto 20px; /* Jarak dari header */
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.setting-item {
+  padding: 15px 0;
+}
+
+.setting-item h3 {
+  margin-top: 0;
+  color: #333;
+  border-bottom: 2px solid #f0f0f0;
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+}
+
+.setting-control {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+/* Form Ganti Password */
+#changePasswordForm input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+/* SWITCH TOGGLE (Dark Mode) */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 34px;
+}
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+input:checked + .slider {
+  background-color: #2196f3;
+}
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+/* === DARK MODE STYLING === */
+.dark-mode {
+  background-color: #121212 !important; /* Warna latar belakang gelap */
+  color: #f0f0f0 !important;
+}
+
+.dark-mode header,
+.dark-mode .main-header,
+.dark-mode .settings-page {
+  background-color: #1e1e1e !important;
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+}
+
+.dark-mode h3 {
+  color: #ccc !important;
+}
+
+.dark-mode hr {
+  border-color: #333;
+}
+
+.dark-mode .settings-page input {
+  background-color: #333;
+  color: #f0f0f0;
+  border-color: #555;
 }

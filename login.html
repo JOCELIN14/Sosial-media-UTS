@@ -3,29 +3,81 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login SosialKu</title>
+    <title>SosialKu - Login</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <div class="auth-container">
-      <h2>Selamat Datang di SosialKu</h2>
-      <input type="text" id="usernameInput" placeholder="Nama Pengguna" />
-      <input type="password" id="passwordInput" placeholder="Password" />
-      <button id="loginBtn">Login</button>
-      <button id="signupBtn">Sign Up</button>
+      <h2 id="formTitle">Login ke SosialKu</h2>
+
+      <!-- Form Login -->
+      <div id="loginForm">
+        <input type="text" id="loginUsername" placeholder="Nama Pengguna" />
+        <input type="password" id="loginPassword" placeholder="Password" />
+        <button id="loginBtn">Login</button>
+        <p>
+          Belum punya akun?
+          <a href="#" id="showSignup">Daftar di sini</a>
+        </p>
+      </div>
+
+      <!-- Form Signup -->
+      <div id="signupForm" style="display: none">
+        <input type="text" id="signupName" placeholder="Nama Lengkap " />
+        <input type="text" id="signupUsername" placeholder="Nama Pengguna" />
+        <input
+          type="email"
+          id="signupEmail"
+          placeholder="Alamat Email :abcd@gmail.com"
+        />
+        <input
+          type="text"
+          id="signupPhone"
+          placeholder="Nomor Telepon::contoh: 081234567890 atau +6281234567890"
+        />
+        <input
+          type="date"
+          id="signupBirth"
+          placeholder="Tanggal Lahir:Tanggal Lahir: Minimal usia 17 tahun"
+        />
+        <input
+          type="password"
+          id="signupPassword"
+          placeholder="Password:Minimal 6 karakter"
+        />
+        <button id="signupBtn">Daftar</button>
+        <p>
+          Sudah punya akun?
+          <a href="#" id="showLogin">Login di sini</a>
+        </p>
+      </div>
     </div>
 
     <script>
-      const usernameInput = document.getElementById("usernameInput");
-      const passwordInput = document.getElementById("passwordInput");
-      const loginBtn = document.getElementById("loginBtn");
-      const signupBtn = document.getElementById("signupBtn");
+      const users = JSON.parse(localStorage.getItem("users") || "{}");
 
-      let users = JSON.parse(localStorage.getItem("users") || "{}");
+      // Toggle antar form
+      const loginForm = document.getElementById("loginForm");
+      const signupForm = document.getElementById("signupForm");
+      const formTitle = document.getElementById("formTitle");
 
-      loginBtn.addEventListener("click", () => {
-        const username = usernameInput.value.trim();
-        const password = passwordInput.value.trim();
+      document.getElementById("showSignup").addEventListener("click", () => {
+        loginForm.style.display = "none";
+        signupForm.style.display = "block";
+        formTitle.innerText = "Daftar Akun SosialKu";
+      });
+
+      document.getElementById("showLogin").addEventListener("click", () => {
+        signupForm.style.display = "none";
+        loginForm.style.display = "block";
+        formTitle.innerText = "Login ke SosialKu";
+      });
+
+      // LOGIN
+      document.getElementById("loginBtn").addEventListener("click", () => {
+        const username = document.getElementById("loginUsername").value.trim();
+        const password = document.getElementById("loginPassword").value.trim();
+
         if (!username || !password) return alert("Isi semua data!");
 
         if (users[username] && users[username].password === password) {
@@ -36,22 +88,78 @@
         }
       });
 
-      signupBtn.addEventListener("click", () => {
-        const username = usernameInput.value.trim();
-        const password = passwordInput.value.trim();
-        if (!username || !password) return alert("Isi semua data!");
+      // SIGNUP
+      document.getElementById("signupBtn").addEventListener("click", () => {
+        const name = document.getElementById("signupName").value.trim();
+        const username = document.getElementById("signupUsername").value.trim();
+        const email = document.getElementById("signupEmail").value.trim();
+        const phone = document.getElementById("signupPhone").value.trim();
+        const birth = document.getElementById("signupBirth").value.trim();
+        const password = document.getElementById("signupPassword").value.trim();
 
-        if (users[username]) {
-          alert("Username sudah terdaftar!");
-        } else {
-          users[username] = {
-            password: password,
-            following: []
-          };
-          localStorage.setItem("users", JSON.stringify(users));
-          localStorage.setItem("activeUser", username);
-          window.location.href = "index.html";
+        if (!name || !username || !email || !phone || !birth || !password) {
+          return alert("Harap isi semua data pendaftaran!");
         }
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+          return alert("Format email salah!");
+        }
+        if (users[username]) {
+          return alert("Username sudah digunakan!");
+        }
+        const phoneRegex = /^(\+62|62|0)8[1-9][0-9]{6,9}$/;
+        const cleanPhone = phone.replace(/\s+/g, "").replace(/[-()+]/g, "");
+
+        if (!phoneRegex.test(cleanPhone)) {
+          alert("Format nomor telepon tidak valid!");
+          return;
+        }
+        let formattedPhone = cleanPhone;
+        if (cleanPhone.startsWith("0")) {
+          formattedPhone = "+62" + cleanPhone.substring(1);
+        } else if (cleanPhone.startsWith("62")) {
+          formattedPhone = "+" + cleanPhone;
+        } else if (cleanPhone.startsWith("+62")) {
+        }
+        const birthDate = new Date(birth);
+        const today = new Date();
+        const age = today.getFullYear() - birthDate.getFullYear();
+        const monthDiff = today.getMonth() - birthDate.getMonth();
+        const hasBirthdayPassed =
+          monthDiff > 0 ||
+          (monthDiff === 0 && today.getDate() >= birthDate.getDate());
+        const actualAge = hasBirthdayPassed ? age : age - 1;
+
+        if (actualAge < 17) {
+          alert("Maaf, Anda harus berusia minimal 17 tahun untuk mendaftar.");
+          return;
+        }
+
+        if (actualAge > 60) {
+          const confirmAge = confirm("Apakah usia Anda sudah benar?");
+          if (!confirmAge) {
+            return;
+          }
+        }
+        if (password.length < 6) {
+          alert("Password harus minimal 6 karakter");
+          return;
+        }
+
+        users[username] = {
+          name,
+          email,
+          phone,
+          birth,
+          password,
+          following: [],
+        };
+
+        localStorage.setItem("users", JSON.stringify(users));
+        localStorage.setItem("activeUser", username);
+        alert("Pendaftaran berhasil! Anda sudah login.");
+        window.location.href = "index.html";
       });
     </script>
   </body>
