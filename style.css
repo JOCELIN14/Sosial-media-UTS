@@ -1317,6 +1317,111 @@ input:checked + .slider:before {
   transform: translateX(26px);
 }
 
+/* Notification Style */
+.notification-area {
+  position: relative;
+}
+
+.notification-bell {
+  position: relative;
+  font-size: 2rem;
+  padding: 1.5rem;
+  color: #666;
+}
+.notification-bell:hover {
+  color: var(--pink);
+}
+
+.notification-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 10px;
+  height: 10px;
+  background-color: red;
+  border-radius: 50%;
+  border: 2px solid white;
+  display: none; /* Hidden by default */
+}
+
+.notification-badge.show {
+  display: block;
+}
+
+.notification-page-container {
+  max-width: 700px;
+  margin: 100px auto 30px;
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.notification-page-container h2 {
+  font-size: 2.4rem;
+  color: #333;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 1rem;
+}
+
+.notification-list-page .notification-item-page {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 1.5rem 1rem;
+  border-bottom: 1px solid #f0f0f0;
+}
+.notification-list-page .notification-item-page:last-child {
+  border-bottom: none;
+}
+
+.notification-list-page .notification-item-page.unread {
+  background-color: #f8faff;
+}
+
+.notification-list-page .notification-item-page img {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.notification-list-page .notification-item-page p {
+  font-size: 1.4rem;
+  color: #555;
+  margin: 0;
+  text-transform: none;
+}
+
+.no-notifications-page {
+  text-align: center;
+  padding: 4rem;
+  font-size: 1.5rem;
+  color: #888;
+}
+
+/* Dark Mode Notification Page */
+.dark-mode .notification-page-container {
+  background-color: #1e1e1e;
+  color: #f5f5f5;
+}
+.dark-mode .notification-page-container h2 {
+  color: #f5f5f5;
+  border-bottom-color: #333;
+}
+.dark-mode .notification-list-page .notification-item-page {
+  border-bottom-color: #333;
+}
+.dark-mode .notification-list-page .notification-item-page.unread {
+  background-color: #2a3b4d;
+}
+.dark-mode .notification-list-page .notification-item-page p {
+  color: #ccc;
+}
+.dark-mode .no-notifications-page {
+  color: #666;
+}
 .dark-mode {
   background-color: #121212 !important;
   color: #f5f5f5 !important;
@@ -1477,108 +1582,176 @@ input,
 textarea {
   transition: background-color 0.3s, color 0.3s;
 }
-
-/* Notification Style */
-.notification-area {
-  position: relative;
-}
-
-.notification-bell {
-  position: relative;
-  font-size: 2rem;
-  padding: 1.5rem;
-  color: #666;
-}
-.notification-bell:hover {
-  color: var(--pink);
-}
-
-.notification-badge {
+.delete-post-btn::after {
+  content: attr(title);
   position: absolute;
-  top: 12px;
-  right: 12px;
-  width: 10px;
-  height: 10px;
-  background-color: red;
-  border-radius: 50%;
-  border: 2px solid white;
-  display: none; /* Hidden by default */
+  bottom: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 1.2rem;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
 }
 
-.notification-badge.show {
-  display: block;
+.delete-post-btn:hover::after {
+  opacity: 1;
 }
 
-.notification-page-container {
-    max-width: 700px;
-    margin: 100px auto 30px;
-    padding: 2rem;
-    background-color: #fff;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+/* Konfirmasi dialog custom (opsional) */
+.delete-confirm-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
 }
 
-.notification-page-container h2 {
-    font-size: 2.4rem;
-    color: #333;
-    margin-bottom: 2rem;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 1rem;
+.delete-confirm-overlay.show {
+  display: flex;
 }
 
-.notification-list-page .notification-item-page {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    padding: 1.5rem 1rem;
-    border-bottom: 1px solid #f0f0f0;
-}
-.notification-list-page .notification-item-page:last-child {
-    border-bottom: none;
+.delete-confirm-box {
+  background: white;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  max-width: 400px;
+  text-align: center;
 }
 
-.notification-list-page .notification-item-page.unread {
-    background-color: #f8faff;
+.delete-confirm-box h3 {
+  margin: 0 0 12px;
+  color: #333;
+  font-size: 1.8rem;
 }
 
-.notification-list-page .notification-item-page img {
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    object-fit: cover;
+.delete-confirm-box p {
+  margin: 0 0 20px;
+  color: #666;
+  font-size: 1.4rem;
 }
 
-.notification-list-page .notification-item-page p {
+.delete-confirm-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.delete-confirm-buttons button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-size: 1.4rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.delete-confirm-buttons .btn-cancel {
+  background: #e0e0e0;
+  color: #333;
+}
+
+.delete-confirm-buttons .btn-cancel:hover {
+  background: #d0d0d0;
+}
+
+.delete-confirm-buttons .btn-delete {
+  background: #f44336;
+  color: white;
+}
+
+.delete-confirm-buttons .btn-delete:hover {
+  background: #d32f2f;
+}
+
+/* Dark mode untuk confirm dialog */
+.dark-mode .delete-confirm-box {
+  background: #2a2a2a;
+}
+
+.dark-mode .delete-confirm-box h3 {
+  color: #f0f0f0;
+}
+
+.dark-mode .delete-confirm-box p {
+  color: #ccc;
+}
+
+.dark-mode .delete-confirm-buttons .btn-cancel {
+  background: #444;
+  color: #f0f0f0;
+}
+
+.dark-mode .delete-confirm-buttons .btn-cancel:hover {
+  background: #555;
+}
+/* Responsive */
+@media (max-width: 768px) {
+  .modal-box {
+    padding: 20px;
+    max-width: 90%;
+  }
+
+  .modal-box.delete-confirm h3 {
+    font-size: 1.8rem;
+  }
+
+  .modal-buttons {
+    flex-direction: column;
+  }
+
+  .modal-buttons button {
+    width: 100%;
+  }
+
+  .btn-delete-account {
     font-size: 1.4rem;
-    color: #555;
-    margin: 0;
-    text-transform: none;
+    padding: 10px 16px;
+  }
 }
 
-.no-notifications-page {
-    text-align: center;
-    padding: 4rem;
-    font-size: 1.5rem;
-    color: #888;
+/* Animation untuk button hover */
+.btn-delete-account i {
+  transition: transform 0.3s ease;
 }
 
-/* Dark Mode Notification Page */
-.dark-mode .notification-page-container {
-    background-color: #1e1e1e;
-    color: #f5f5f5;
+.btn-delete-account:hover i {
+  animation: shake 0.5s ease;
 }
-.dark-mode .notification-page-container h2 {
-    color: #f5f5f5;
-    border-bottom-color: #333;
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-10deg);
+  }
+  75% {
+    transform: rotate(10deg);
+  }
 }
-.dark-mode .notification-list-page .notification-item-page {
-    border-bottom-color: #333;
+
+/* Highlight effect saat input benar */
+.confirm-input-group input.correct {
+  border-color: #4caf50;
+  background: #e8f5e9;
 }
-.dark-mode .notification-list-page .notification-item-page.unread {
-    background-color: #2a3b4d;
-}
-.dark-mode .notification-list-page .notification-item-page p {
-    color: #ccc;
+
+.dark-mode .confirm-input-group input.correct {
+  background: #1b5e20;
+  border-color: #4caf50;
 }
 .dark-mode .no-notifications-page {
     color: #666;

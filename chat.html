@@ -9,103 +9,9 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
     />
     <link rel="stylesheet" href="style.css" />
-    <style>
-      /* CSS Minimal untuk Chat (sebaiknya dipindahkan ke style.css) */
-      .chat-container {
-        display: flex;
-        max-width: 1200px;
-        margin: 100px auto 20px;
-        padding: 0 15px;
-        height: 75vh;
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        overflow: hidden;
-      }
-      .contact-list {
-        width: 30%;
-        border-right: 1px solid #eee;
-        overflow-y: auto;
-        background-color: #f8f8f8;
-      }
-      .chat-box {
-        width: 70%;
-        display: flex;
-        flex-direction: column;
-      }
-      .contact-item {
-        padding: 15px;
-        cursor: pointer;
-        border-bottom: 1px solid #eee;
-        display: flex;
-        align-items: center;
-      }
-      .contact-item:hover,
-      .contact-item.active {
-        background-color: #e6e6e6;
-      }
-      .contact-item img {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        margin-right: 10px;
-      }
-      .chat-header {
-        padding: 15px;
-        background-color: #007bff;
-        color: white;
-        font-weight: bold;
-        display: flex;
-        align-items: center;
-      }
-      .chat-messages {
-        flex-grow: 1;
-        padding: 15px;
-        overflow-y: auto;
-        background-color: #fff;
-      }
-      .message-input {
-        padding: 15px;
-        border-top: 1px solid #ccc;
-        display: flex;
-      }
-      .message-input input {
-        flex-grow: 1;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 20px;
-        margin-right: 10px;
-      }
-      .message-input button {
-        background-color: #007bff;
-        color: white;
-        border: none;
-        padding: 10px 15px;
-        border-radius: 20px;
-        cursor: pointer;
-      }
-      .message-input button:hover {
-        background-color: #0056b3;
-      }
-      /* Styling Pesan */
-      .message {
-        margin-bottom: 10px;
-        max-width: 70%;
-        padding: 8px 12px;
-        border-radius: 15px;
-      }
-      .message.sender {
-        background-color: #dcf8c6; /* Hijau muda */
-        margin-left: auto;
-        text-align: right;
-      }
-      .message.receiver {
-        background-color: #f0f0f0; /* Abu-abu muda */
-        margin-right: auto;
-        text-align: left;
-      }
-    </style>
+    <link rel="stylesheet" href="chat.css" />
   </head>
-  <body>
+  <body class="chat-page">
     <header>
       <input type="checkbox" id="toggler" />
       <label for="toggler" class="fas fa-bars"></label>
@@ -113,7 +19,11 @@
       <a href="index.html" class="logo">SosMed Mahasiswa Untar<span>.</span></a>
 
       <nav class="navbar">
-        <a href="notification.html" class="notification-bell" id="notificationBell">
+        <a
+          href="notification.html"
+          class="notification-bell"
+          id="notificationBell"
+        >
           <i class="fas fa-bell"></i>
           <span class="notification-badge" id="notificationBadge"></span>
         </a>
@@ -131,161 +41,138 @@
         <a href="stats.html" class="btn-stats"
           ><i class="fas fa-chart-bar"></i
         ></a>
-
-        <form class="search-bar" id="search-form">
-          <input
-            type="text"
-            id="search-input"
-            placeholder="Cari teman atau postingan..."
-          />
-          <button type="submit"><i class="fas fa-search"></i></button>
-        </form>
       </nav>
     </header>
 
-    <main>
+    <main class="chat-main">
       <div class="chat-container">
+        <!-- CONTACT LIST -->
         <div class="contact-list" id="contactList">
-          <div class="chat-header" style="background-color: #333">
-            Daftar Chat
+          <div class="chat-sidebar-header">
+            <h3><i class="fas fa-comments"></i> Pesan</h3>
+            <button class="new-chat-btn" title="Chat Baru">
+              <i class="fas fa-edit"></i>
+            </button>
           </div>
-          <div class="contact-item active" data-username="budi">
-            <img src="images/profile.png" alt="Budi" />
-            <span>Budi Santoso</span>
+
+          <div class="search-contacts">
+            <i class="fas fa-search"></i>
+            <input
+              type="text"
+              placeholder="Cari kontak..."
+              id="searchContact"
+            />
           </div>
-          <div class="contact-item" data-username="andi">
-            <img src="images/profile.png" alt="Andi" />
-            <span>Andi Pratama</span>
+
+          <div class="contacts-scroll">
+            <div class="contact-item active" data-username="user1">
+              <img src="images/profile.png" alt="User1" />
+              <div class="contact-info">
+                <div class="contact-name">User 1</div>
+                <div class="contact-last-message">Halo, apa kabar?</div>
+              </div>
+              <div class="contact-meta">
+                <span class="message-time">10:30</span>
+                <span class="unread-badge">3</span>
+              </div>
+            </div>
+
+            <div class="contact-item" data-username="user2">
+              <img src="images/profile.png" alt="User2" />
+              <div class="contact-info">
+                <div class="contact-name">User 2</div>
+                <div class="contact-last-message">Baik, terima kasih!</div>
+              </div>
+              <div class="contact-meta">
+                <span class="message-time">09:15</span>
+              </div>
+            </div>
+
+            <div class="contact-item" data-username="user3">
+              <img src="images/profile.png" alt="User3" />
+              <div class="contact-info">
+                <div class="contact-name">User 3</div>
+                <div class="contact-last-message">Oke, sampai jumpa!</div>
+              </div>
+              <div class="contact-meta">
+                <span class="message-time">Kemarin</span>
+              </div>
+            </div>
           </div>
         </div>
 
+        <!-- CHAT BOX -->
         <div class="chat-box" id="chatBox">
           <div class="chat-header" id="currentChatHeader">
-            <img
-              src="images/profile.png"
-              alt="Nama Kontak"
-              style="width: 30px; height: 30px; margin-right: 10px"
-            />
-            <span>Pilih kontak untuk memulai chat</span>
+            <div class="chat-header-left">
+              <img
+                src="images/profile.png"
+                alt="Nama Kontak"
+                class="header-avatar"
+              />
+              <div class="header-info">
+                <h4 class="header-name">Pilih kontak untuk memulai chat</h4>
+                <span class="header-status">Online</span>
+              </div>
+            </div>
+            <div class="chat-header-actions">
+              <button class="header-btn" title="Cari pesan">
+                <i class="fas fa-search"></i>
+              </button>
+              <button class="header-btn" title="Info kontak">
+                <i class="fas fa-info-circle"></i>
+              </button>
+              <button class="header-btn" title="Menu">
+                <i class="fas fa-ellipsis-v"></i>
+              </button>
+            </div>
           </div>
 
           <div class="chat-messages" id="chatMessages">
-            <div class="message receiver">Halo, apa kabar?</div>
-            <div class="message sender">Baik, kamu gimana?</div>
+            <div class="date-divider">
+              <span>Hari ini</span>
+            </div>
+            <div class="message receiver">
+              <div class="message-content">Halo, apa kabar?</div>
+              <div class="message-time">10:30</div>
+            </div>
+            <div class="message sender">
+              <div class="message-content">Baik, kamu gimana?</div>
+              <div class="message-time">10:31</div>
+            </div>
           </div>
 
-          <div class="message-input">
-            <input type="text" id="messageInput" placeholder="Ketik pesan..." />
-            <button id="sendBtn">
-              <i class="fas fa-paper-plane"></i> Kirim
+          <div class="message-input-container">
+            <button class="attachment-btn" title="Lampiran">
+              <i class="fas fa-paperclip"></i>
+            </button>
+            <div class="input-wrapper">
+              <input
+                type="text"
+                id="messageInput"
+                placeholder="Ketik pesan..."
+                autocomplete="off"
+              />
+              <button class="emoji-btn" title="Emoji">
+                <i class="far fa-smile"></i>
+              </button>
+            </div>
+            <button id="sendBtn" class="send-btn">
+              <i class="fas fa-paper-plane"></i>
             </button>
           </div>
+        </div>
+
+        <!-- EMPTY STATE -->
+        <div class="empty-state" id="emptyState" style="display: none">
+          <i class="fas fa-comments"></i>
+          <h3>Tidak ada chat dipilih</h3>
+          <p>Pilih kontak dari daftar untuk memulai percakapan</p>
         </div>
       </div>
     </main>
 
-    <script>
-      // Load user data
-      const users = JSON.parse(localStorage.getItem("users") || "{}");
-      const activeUser = localStorage.getItem("activeUser");
-
-      // Amankan halaman
-      if (!activeUser) {
-        window.location.href = "login.html";
-      }
-
-      // NAVIGASI SEARCH (sama seperti di index.html)
-      document
-        .getElementById("search-form")
-        .addEventListener("submit", function (e) {
-          e.preventDefault();
-          window.location.href = "search.html";
-        });
-
-      // LOGOUT
-      document.getElementById("btn-logout").addEventListener("click", (e) => {
-        e.preventDefault();
-        localStorage.removeItem("activeUser");
-        window.location.href = "login.html";
-      });
-
-      // Tautan ke Home dan Profile
-      document.getElementById("btn-home").href = "index.html";
-      document.getElementById("btn-profile").href = "profile.html";
-
-      // --- Logika Dummy Chat ---
-      const contactList = document.getElementById("contactList");
-      const chatMessages = document.getElementById("chatMessages");
-      const messageInput = document.getElementById("messageInput");
-      const sendBtn = document.getElementById("sendBtn");
-      const currentChatHeader = document.getElementById("currentChatHeader");
-
-      let currentChatPartner = null;
-
-      // Fungsi untuk menampilkan pesan (DUMMY/SIMULASI)
-      function displayMessage(text, type) {
-        const msgDiv = document.createElement("div");
-        msgDiv.classList.add("message", type);
-        msgDiv.textContent = text;
-        chatMessages.appendChild(msgDiv);
-        // Auto scroll ke bawah
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-      }
-
-      // Event listener untuk tombol Kirim
-      sendBtn.addEventListener("click", () => {
-        const text = messageInput.value.trim();
-        if (text === "") return;
-
-        // Tampilkan pesan sebagai pengirim
-        displayMessage(text, "sender");
-        messageInput.value = "";
-
-        // Simulasi balasan (hanya untuk demo)
-        setTimeout(() => {
-          displayMessage(
-            "Terima kasih atas pesannya! (Simulasi Balasan)",
-            "receiver"
-          );
-        }, 1000);
-      });
-
-      // Event listener untuk memilih kontak (DUMMY)
-      contactList.querySelectorAll(".contact-item").forEach((item) => {
-        item.addEventListener("click", () => {
-          // Hapus status active dari kontak lain
-          contactList
-            .querySelectorAll(".contact-item")
-            .forEach((i) => i.classList.remove("active"));
-
-          // Set kontak ini menjadi active
-          item.classList.add("active");
-
-          // Ganti header chat
-          const partnerName = item.querySelector("span").textContent;
-          currentChatHeader.innerHTML = `
-                <img src="images/profile.png" alt="${partnerName}" style="width: 30px; height: 30px; margin-right: 10px; border-radius: 50%;">
-                <span>${partnerName}</span>
-              `;
-
-          // Kosongkan dan tampilkan pesan dummy baru
-          chatMessages.innerHTML = `
-                <div style="text-align: center; color: #888; padding: 10px;">Anda memulai chat dengan ${partnerName}</div>
-                <div class="message receiver">Hai!</div>
-                <div class="message sender">Siap! Ada perlu apa?</div>
-              `;
-        });
-      });
-
-      // Pilih kontak pertama saat halaman dimuat
-      contactList.querySelector(".contact-item").click();
-    </script>
-    
-    <script src="script.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            setupNotifications();
-        });
-    </script>
+    <script src="profile-utils.js"></script>
+    <script src="chat.js"></script>
   </body>
 </html>

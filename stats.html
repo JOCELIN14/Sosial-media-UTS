@@ -19,6 +19,35 @@
 
       <nav class="navbar">
         <a href="notification.html" class="notification-bell" id="notificationBell">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Statistics</title>
+    <script>
+      (function () {
+        const theme = localStorage.getItem("themePreference");
+        if (theme === "dark") {
+          document.documentElement.classList.add("dark-mode");
+        } else {
+          document.documentElement.classList.add("light-mode");
+        }
+      })();
+    </script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <a href="index.html" class="logo">SosMed Mahasiswa Untar<span>.</span></a>
+      <nav class="navbar">
+        <a
+          href="notification.html"
+          class="notification-bell"
+          id="notificationBell"
+        >
           <i class="fas fa-bell"></i>
           <span class="notification-badge" id="notificationBadge"></span>
         </a>
@@ -64,25 +93,42 @@
         <h3 id="likeCount">0</h3>
         <p>Total Likes</p>
       </div>
-      <div class="stats-card">
-        <i class="fas fa-comment"></i>
-        <h3 id="commentCount">0</h3>
-        <p>Total Comments</p>
+
+      <div class="stats-grid">
+        <div class="stats-card">
+          <i class="fas fa-pen"></i>
+          <h3 id="postCount">0</h3>
+          <p>Total Posts</p>
+        </div>
+        <div class="stats-card">
+          <i class="fas fa-heart"></i>
+          <h3 id="likeCount">0</h3>
+          <p>Total Likes</p>
+        </div>
+        <div class="stats-card">
+          <i class="fas fa-comment"></i>
+          <h3 id="commentCount">0</h3>
+          <p>Total Comments</p>
+        </div>
       </div>
-    </div>
 
-    <div class="chart-section">
-      <h3>Activity Overview</h3>
-      <canvas id="activityChart" width="650" height="350"></canvas>
-    </div>
+      <div class="chart-section">
+        <h3>Activity Overview</h3>
+        <canvas id="activityChart" width="650" height="350"></canvas>
+      </div>
 
-    <div class="popular-section">
-      <h3>Popular Posts</h3>
-      <div id="popularPosts"></div>
-    </div>
-  </section>
+      <div class="popular-section">
+        <h3>Popular Posts</h3>
+        <div id="popularPosts"></div>
+      </div>
+    </section>
 
-  <script src="stats.js"></script>
-  <script src="script.js"></script>
-</body>
+    <script src="stats.js"></script>
+    <script src="script.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        setupNotifications();
+      });
+    </script>
+  </body>
 </html>

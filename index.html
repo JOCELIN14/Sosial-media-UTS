@@ -21,7 +21,6 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <!-- HEADER / NAVBAR -->
     <header>
       <input type="checkbox" id="toggler" />
       <label for="toggler" class="fas fa-bars"></label>
@@ -29,12 +28,18 @@
       <a href="#" class="logo">SosMed Mahasiswa Untar<span>.</span></a>
 
       <nav class="navbar">
-        <a href="notification.html" class="notification-bell" id="notificationBell">
+        <a
+          href="notification.html"
+          class="notification-bell"
+          id="notificationBell"
+        >
           <i class="fas fa-bell"></i>
           <span class="notification-badge" id="notificationBadge"></span>
         </a>
 
-        <a href="profile.html" id="btn-profile"><i class="fas fa-user-circle"></i></a>
+        <a href="profile.html" id="btn-profile"
+          ><i class="fas fa-user-circle"></i
+        ></a>
         <a href="#" id="btn-logout"><i class="fas fa-sign-out-alt"></i></a>
         <a href="#home" id="btn-home"><i class="fas fa-home"></i></a>
         <a href="chat.html" id="btn-chat"><i class="fas fa-comments"></i></a>
@@ -42,7 +47,6 @@
           ><i class="fas fa-chart-bar"></i
         ></a>
 
-        <!-- FORM SEARCH -->
         <form class="search-bar" id="search-form">
           <input
             type="text"
@@ -54,7 +58,6 @@
       </nav>
     </header>
 
-    <!-- HOME SECTION -->
     <section class="home" id="home">
       <div class="content">
         <h3>Sosial Media Mahasiswa</h3>
@@ -69,14 +72,10 @@
       </div>
     </section>
 
-    <!-- USERS SECTION -->
     <section class="users-section">
       <h3>Akun Terdaftar</h3>
-      <div id="usersList" class="users-list">
-        </div>
+      <div id="usersList" class="users-list"></div>
     </section>
-
-    <!-- SEARCH RESULT SECTION -->
     <section
       class="search-result-section"
       id="search-result-container"
@@ -86,7 +85,6 @@
       <div class="search-results" id="search-results"></div>
     </section>
 
-    <!-- MAIN CONTENT -->
     <main id="mainContent">
       <section class="profile-page">
         <div class="profile-header">
@@ -104,13 +102,6 @@
           </div>
         </div>
 
-        <!-- TEMAN MAHASISWA -->
-        <section class="user-list" id="userList">
-          <h3>Teman Mahasiswa Lain</h3>
-          <div class="user-cards" id="userCards"></div>
-        </section>
-
-        <!-- BUAT POSTINGAN -->
         <section class="create-post">
           <img id="fotoProfil" src="images/profile.png" alt="Foto Profil" />
           <div class="create-post-content">
@@ -125,12 +116,10 @@
           </div>
         </section>
 
-        <!-- FEED -->
         <section class="feed" id="feed"></section>
       </section>
     </main>
 
-    <!-- MODAL FOLLOWER/FOLLOWING -->
     <div id="user-list-modal" class="modal">
       <div class="modal-content">
         <span class="close-btn">&times;</span>
@@ -139,8 +128,6 @@
       </div>
     </div>
 
-    <script src="script.js"></script>
-    <script src="profile.js"></script>
     <script>
       document
         .getElementById("search-form")
@@ -160,5 +147,9 @@
         }
       });
     </script>
+
+    <script src="profile-utils.js"></script>
+    <script src="script.js"></script>
+    <script src="profile.js"></script>
   </body>
 </html>
