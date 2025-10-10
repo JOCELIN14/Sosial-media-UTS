@@ -40,7 +40,7 @@
       </nav>
   </header>
 
-  <section class="stats-container"> 
+    <section class="stats-container"> 
     <div class="stats-header" style="text-align:center; margin-bottom:1.5rem;">
       <a href="activity.html" class="btn-switch">
         <i class="fas fa-tasks"></i> View Activity
@@ -50,39 +50,29 @@
       </a>
 
       <h2 style="margin-top:1.5rem;">User Statistics</h2>
-      <p>Statistics Summary</p>
+      <p>Activity Summary</p>
     </div>
 
-    <div class="stats-grid">
-      <div class="stats-card">
-        <i class="fas fa-pen"></i>
-        <h3 id="postCount">0</h3>
-        <p>Total Posts</p>
-      </div>
-      <div class="stats-card">
-        <i class="fas fa-heart"></i>
-        <h3 id="likeCount">0</h3>
-        <p>Total Likes</p>
-      </div>
-      <div class="stats-card">
-        <i class="fas fa-comment"></i>
-        <h3 id="commentCount">0</h3>
-        <p>Total Comments</p>
-      </div>
-    </div>
+    <section id="posts" class="activity-section">
+      <h2>📝 Your Posts</h2>
+      <div class="activity-items"></div>
+    </section>
 
-    <div class="chart-section">
-      <h3>Activity Overview</h3>
-      <canvas id="activityChart" width="650" height="350"></canvas>
-    </div>
+    <section id="liked" class="activity-section">
+      <h2>❤️ Liked Posts</h2>
+      <div class="activity-items"></div>
+    </section>
 
-    <div class="popular-section">
-      <h3>Popular Posts</h3>
-      <div id="popularPosts"></div>
-    </div>
-  </section>
+    <section id="commented" class="activity-section">
+      <h2>💬 Commented Posts</h2>
+      <div class="activity-items"></div>
+    </section>
 
-  <script src="stats.js"></script>
-  <script src="script.js"></script>
+    <section id="followed" class="activity-section">
+      <h2>➕ Followed Users</h2>
+      <div class="activity-items"></div>
+    </section>
+
+  <script src="activity.js"></script>
 </body>
 </html>
