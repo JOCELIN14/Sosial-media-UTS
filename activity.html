@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Statistics</title>
+  <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+  />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+      <input type="checkbox" id="toggler" />
+      <label for="toggler" class="fas fa-bars"></label>
+
+      <a href="#" class="logo">SosMed Mahasiswa Untar<span>.</span></a>
+
+      <nav class="navbar">
+        <a href="notification.html" class="notification-bell" id="notificationBell">
+          <i class="fas fa-bell"></i>
+          <span class="notification-badge" id="notificationBadge"></span>
+        </a>
+
+        <a href="profile.html" id="btn-profile"><i class="fas fa-user-circle"></i></a>
+        <a href="#" id="btn-logout"><i class="fas fa-sign-out-alt"></i></a>
+        <a href="index.html" id="btn-home"><i class="fas fa-home"></i></a>
+        <a href="chat.html" id="btn-chat"><i class="fas fa-comments"></i></a>
+        <a href="stats.html" class="btn-stats active"><i class="fas fa-chart-bar"></i></a>
+
+        <form class="search-bar" id="search-form">
+          <input
+            type="text"
+            id="search-input"
+            placeholder="Cari teman atau postingan..."
+          />
+          <button type="submit"><i class="fas fa-search"></i></button>
+        </form>
+      </nav>
+  </header>
+
+    <section class="stats-container"> 
+    <div class="stats-header" style="text-align:center; margin-bottom:1.5rem;">
+      <a href="activity.html" class="btn-switch">
+        <i class="fas fa-tasks"></i> View Activity
+      </a>
+      <a href="stats.html" class="btn-switch active">
+        <i class="fas fa-chart-bar"></i> View Statistics
+      </a>
+
+      <h2 style="margin-top:1.5rem;">User Statistics</h2>
+      <p>Activity Summary</p>
+    </div>
+
+    <section id="posts" class="activity-section">
+      <h2>📝 Your Posts</h2>
+      <div class="activity-items"></div>
+    </section>
+
+    <section id="liked" class="activity-section">
+      <h2>❤️ Liked Posts</h2>
+      <div class="activity-items"></div>
+    </section>
+
+    <section id="commented" class="activity-section">
+      <h2>💬 Commented Posts</h2>
+      <div class="activity-items"></div>
+    </section>
+
+    <section id="followed" class="activity-section">
+      <h2>➕ Followed Users</h2>
+      <div class="activity-items"></div>
+    </section>
+
+  <script src="activity.js"></script>
+</body>
+</html>

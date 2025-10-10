@@ -1753,3 +1753,66 @@ textarea {
   background: #1b5e20;
   border-color: #4caf50;
 }
+.dark-mode .no-notifications-page {
+    color: #666;
+}
+
+.btn-switch {
+  display: inline-block;
+  background: whitesmoke;
+  padding: 10px 20px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.3s ease;
+}
+
+.btn-switch:hover {
+  background: whitesmoke;
+  transform: translateY(-2px);
+}
+
+
+.activity-section {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+}
+
+.activity-section h2 {
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  color: #1e90ff;
+}
+
+.activity-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.activity-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+  background: #f8f9fc;
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.activity-item:hover {
+  background: #eaf3ff;
+  transform: translateX(3px);
+}
+
+.activity-icon {
+  font-size: 1.4rem;
+}
+
+.activity-text {
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
