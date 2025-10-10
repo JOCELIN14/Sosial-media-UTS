@@ -1584,7 +1584,6 @@ textarea {
     color: #666;
 }
 
-/* Tombol switch antar halaman (Activity <-> Stats) */
 .btn-switch {
   display: inline-block;
   background: whitesmoke;
@@ -1621,7 +1620,6 @@ textarea {
   gap: 0.8rem;
 }
 
-/* === ACTIVITY ITEM === */
 .activity-item {
   display: flex;
   align-items: flex-start;

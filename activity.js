@@ -2,7 +2,6 @@ const posts = JSON.parse(localStorage.getItem("posts")) || [];
 const users = JSON.parse(localStorage.getItem("users")) || {};
 const activeUser = localStorage.getItem("activeUser");
 
-// --- Dropdown ---
 function initDropdown() {
   const dropdown = document.querySelector(".dropdown");
   const btnStats = document.querySelector(".btn-stats");
@@ -20,7 +19,6 @@ function initDropdown() {
   }
 }
 
-// --- Search Redirect ---
 function initSearchRedirect() {
   const searchForm = document.getElementById("search-form");
   if (searchForm) {
@@ -31,11 +29,9 @@ function initSearchRedirect() {
   }
 }
 
-// --- Render Activity per Kategori ---
 function renderActivityByCategory() {
   if (!activeUser || !users[activeUser]) return;
 
-  // --- Liked ---
   const likedContainer = document.querySelector("#liked .activity-items");
   const likedPosts = posts.filter(
     (p) => p.likes?.includes(activeUser) && p.author !== activeUser
@@ -53,7 +49,6 @@ function renderActivityByCategory() {
           )
           .join("");
 
-  // --- Commented ---
   const commentedContainer = document.querySelector("#commented .activity-items");
   const commentedPosts = posts.filter((p) =>
     p.comments?.some((c) => c.author === activeUser)
@@ -71,7 +66,6 @@ function renderActivityByCategory() {
           )
           .join("");
 
-  // --- Followed ---
   const followedContainer = document.querySelector("#followed .activity-items");
   const followedUsers = users[activeUser]?.following || [];
   followedContainer.innerHTML =
@@ -87,7 +81,6 @@ function renderActivityByCategory() {
           )
           .join("");
 
-  // --- Your Posts ---
   const postsContainer = document.querySelector("#posts .activity-items");
   const userPosts = posts.filter((p) => p.author === activeUser);
   postsContainer.innerHTML =
@@ -104,7 +97,6 @@ function renderActivityByCategory() {
           .join("");
 }
 
-// --- Inisialisasi ---
 window.addEventListener("DOMContentLoaded", () => {
   initDropdown();
   initSearchRedirect();
