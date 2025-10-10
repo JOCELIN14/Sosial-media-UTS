@@ -1759,7 +1759,6 @@ textarea {
 
 .btn-switch {
   display: inline-block;
-  background: whitesmoke;
   padding: 10px 20px;
   border-radius: 10px;
   text-decoration: none;
@@ -1768,7 +1767,6 @@ textarea {
 }
 
 .btn-switch:hover {
-  background: whitesmoke;
   transform: translateY(-2px);
 }
 
