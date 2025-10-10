@@ -9,6 +9,7 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
     />
     <link rel="stylesheet" href="style.css" />
+    <script defer src="setting.js"></script>
   </head>
   <body class="light-mode">
     <header>
@@ -16,22 +17,17 @@
       <label for="toggler" class="fas fa-bars"></label>
       <a href="index.html" class="logo">SosMed Mahasiswa Untar<span>.</span></a>
       <nav class="navbar">
-        <a href="notification.html" class="notification-bell" id="notificationBell">
-          <i class="fas fa-bell"></i>
-          <span class="notification-badge" id="notificationBadge"></span>
-        </a>
-
         <a href="profile.html" id="btn-profile"
           ><i class="fas fa-user-circle"></i
         ></a>
         <a href="index.html" id="btn-home"><i class="fas fa-home"></i></a>
-        <a href="chat.html" id="btn-chat"><i class="fas fa-comments"></i></a>
       </nav>
     </header>
 
     <main class="settings-page">
       <h2>Pengaturan Akun</h2>
 
+      <!-- TEMA / DARK MODE -->
       <section class="setting-item">
         <h3>Mode Tampilan</h3>
         <div class="setting-control">
@@ -48,36 +44,31 @@
       <section class="setting-item">
         <h3>Ganti Password</h3>
         <form id="changePasswordForm">
-          <label for="currentPassword">Password Lama</label>
           <input
             type="password"
             id="currentPassword"
-            placeholder="Masukkan password lama"
+            placeholder="Password Lama"
             required
           />
-
-          <label for="newPassword">Password Baru</label>
           <input
             type="password"
             id="newPassword"
-            placeholder="Masukkan password baru"
+            placeholder="Password Baru (min. 6 karakter)"
             required
           />
-
-          <label for="confirmNewPassword">Konfirmasi Password Baru</label>
           <input
             type="password"
             id="confirmNewPassword"
-            placeholder="Ulangi password baru"
+            placeholder="Konfirmasi Password Baru"
             required
           />
-
-          <button type="submit">Ubah Password</button>
+          <button type="submit" class="btn-primary">Ubah Password</button>
         </form>
       </section>
 
       <hr />
 
+      <!-- INFORMASI AKUN -->
       <section class="setting-item">
         <h3>Informasi Akun</h3>
         <div class="setting-control">
@@ -85,14 +76,56 @@
         </div>
         <button id="logoutBtnSetting" class="btn-danger">Logout</button>
       </section>
+
+      <hr />
+
+      <section class="setting-item danger-zone">
+        <h3><i class="fas fa-exclamation-triangle"></i> Zona Bahaya</h3>
+        <p class="warning-text">
+          <strong>Perhatian:</strong> Menghapus akun akan menghapus semua data
+          Anda secara permanen, termasuk postingan, komentar, likes, dan
+          followers.
+          <strong>Tindakan ini tidak dapat dibatalkan!</strong>
+        </p>
+        <button id="deleteAccountBtn" class="btn-delete-account">
+          <i class="fas fa-user-times"></i> Hapus Akun Permanen
+        </button>
+      </section>
     </main>
 
-    <script src="setting.js"></script>
-    <script src="script.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            setupNotifications();
-        });
-    </script>
+    <!-- MODAL KONFIRMASI HAPUS AKUN -->
+    <div id="deleteAccountModal" class="modal-overlay" style="display: none">
+      <div class="modal-box delete-confirm">
+        <h3><i class="fas fa-exclamation-circle"></i> Konfirmasi Hapus Akun</h3>
+        <p>
+          Apakah Anda yakin ingin menghapus akun
+          <strong id="confirmUsername"></strong>?
+        </p>
+        <p class="warning-text-small">
+          Semua data Anda akan hilang permanen dan tidak dapat dipulihkan!
+        </p>
+
+        <div class="confirm-input-group">
+          <label for="confirmDeleteInput">
+            Ketik "<strong>HAPUS</strong>" untuk konfirmasi:
+          </label>
+          <input
+            type="text"
+            id="confirmDeleteInput"
+            placeholder="Ketik: HAPUS"
+            autocomplete="off"
+          />
+        </div>
+
+        <div class="modal-buttons">
+          <button id="cancelDeleteBtn" class="btn-cancel">
+            <i class="fas fa-times"></i> Batal
+          </button>
+          <button id="confirmDeleteBtn" class="btn-delete" disabled>
+            <i class="fas fa-trash-alt"></i> Ya, Hapus Akun Saya
+          </button>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

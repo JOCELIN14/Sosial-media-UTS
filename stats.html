@@ -1,75 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>User Statistics</title>
-  <link
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Statistics</title>
+    <script>
+      (function () {
+        const theme = localStorage.getItem("themePreference");
+        if (theme === "dark") {
+          document.documentElement.classList.add("dark-mode");
+        } else {
+          document.documentElement.classList.add("light-mode");
+        }
+      })();
+    </script>
+    <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-  />
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-  <header>
-    <a href="index.html" class="logo">SosMed Mahasiswa Untar<span>.</span></a>
-    <nav class="navbar">
-        <a href="notification.html" class="notification-bell" id="notificationBell">
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <a href="index.html" class="logo">SosMed Mahasiswa Untar<span>.</span></a>
+      <nav class="navbar">
+        <a
+          href="notification.html"
+          class="notification-bell"
+          id="notificationBell"
+        >
           <i class="fas fa-bell"></i>
           <span class="notification-badge" id="notificationBadge"></span>
         </a>
 
-      <a href="profile.html" id="btn-profile"><i class="fas fa-user-circle"></i></a>
-      <a href="#" id="btn-logout"><i class="fas fa-sign-out-alt"></i></a>
-      <a href="index.html" id="btn-home"><i class="fas fa-home"></i></a>
-      <a href="chat.html" id="btn-chat"><i class="fas fa-comments"></i></a>
-      <a href="stats.html" class="btn-stats"
-        ><i class="fas fa-chart-bar"></i
-      ></a>
-    </nav>
-  </header>
+        <a href="profile.html" id="btn-profile"
+          ><i class="fas fa-user-circle"></i
+        ></a>
+        <a href="#" id="btn-logout"><i class="fas fa-sign-out-alt"></i></a>
+        <a href="index.html" id="btn-home"><i class="fas fa-home"></i></a>
+        <a href="chat.html" id="btn-chat"><i class="fas fa-comments"></i></a>
+        <a href="stats.html" class="btn-stats"
+          ><i class="fas fa-chart-bar"></i
+        ></a>
+      </nav>
+    </header>
 
-  <section class="stats-container"> 
-    <div class="stats-header">
-      <h2>User Statistics</h2>
-      <p>activity summary</p>
-    </div>
+    <section class="stats-container">
+      <div class="stats-header">
+        <h2>User Statistics</h2>
+        <p>activity summary</p>
+      </div>
 
-    <div class="stats-grid">
-      <div class="stats-card">
-        <i class="fas fa-pen"></i>
-        <h3 id="postCount">0</h3>
-        <p>Total Posts</p>
+      <div class="stats-grid">
+        <div class="stats-card">
+          <i class="fas fa-pen"></i>
+          <h3 id="postCount">0</h3>
+          <p>Total Posts</p>
+        </div>
+        <div class="stats-card">
+          <i class="fas fa-heart"></i>
+          <h3 id="likeCount">0</h3>
+          <p>Total Likes</p>
+        </div>
+        <div class="stats-card">
+          <i class="fas fa-comment"></i>
+          <h3 id="commentCount">0</h3>
+          <p>Total Comments</p>
+        </div>
       </div>
-      <div class="stats-card">
-        <i class="fas fa-heart"></i>
-        <h3 id="likeCount">0</h3>
-        <p>Total Likes</p>
-      </div>
-      <div class="stats-card">
-        <i class="fas fa-comment"></i>
-        <h3 id="commentCount">0</h3>
-        <p>Total Comments</p>
-      </div>
-    </div>
 
-    <div class="chart-section">
-      <h3>Activity Overview</h3>
+      <div class="chart-section">
+        <h3>Activity Overview</h3>
         <canvas id="activityChart" width="650" height="350"></canvas>
-    </div>
+      </div>
 
-    <div class="popular-section">
-      <h3>Popular Posts</h3>
-      <div id="popularPosts"></div>
-    </div>
-  </section>
+      <div class="popular-section">
+        <h3>Popular Posts</h3>
+        <div id="popularPosts"></div>
+      </div>
+    </section>
 
-  <script src="stats.js"></script>
-  <script src="script.js"></script>
-  <script>
-      document.addEventListener('DOMContentLoaded', () => {
-          setupNotifications();
+    <script src="stats.js"></script>
+    <script src="script.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        setupNotifications();
       });
-  </script>
-</body>
+    </script>
+  </body>
 </html>
