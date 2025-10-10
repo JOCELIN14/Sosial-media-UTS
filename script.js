@@ -1,3 +1,57 @@
+function createNotification(targetUser, fromUser, type, postId = null) {
+  if (!targetUser || targetUser === fromUser) return;
+  const allUsers = JSON.parse(localStorage.getItem("users")) || {};
+  if (!allUsers[targetUser])
+    allUsers[targetUser] = { ...allUsers[targetUser], notifications: [] };
+  if (!Array.isArray(allUsers[targetUser].notifications))
+    allUsers[targetUser].notifications = [];
+
+  const newNotification = {
+    id: Date.now(),
+    type,
+    fromUser,
+    postId,
+    read: false,
+    timestamp: new Date().toISOString(),
+  };
+
+  allUsers[targetUser].notifications.unshift(newNotification);
+  localStorage.setItem("users", JSON.stringify(allUsers));
+}
+
+function setupNotifications() {
+  const activeUser = localStorage.getItem("activeUser");
+  const allUsers = JSON.parse(localStorage.getItem("users")) || {};
+  const currentUser = allUsers[activeUser];
+  const notifications = currentUser?.notifications || [];
+
+  const badge = document.getElementById('notificationBadge');
+  if (!badge) return;
+
+  const unreadCount = notifications.filter(n => !n.read).length;
+  if (unreadCount > 0) {
+    badge.classList.add('show');
+  } else {
+    badge.classList.remove('show');
+  }
+}
+
+function escapeHtml(str) {
+  if (typeof str !== 'string') return '';
+  return str.replace(/[&<>"'`]/g, (s) => {
+    const map = {
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;",
+      "`": "&#96;",
+    };
+    return map[s];
+  });
+}
+
+
 document.addEventListener("DOMContentLoaded", () => {
   const activeUser = localStorage.getItem("activeUser");
   if (!activeUser) {
@@ -17,10 +71,6 @@ document.addEventListener("DOMContentLoaded", () => {
     posts = p;
   };
 
-  const bell = document.getElementById("notificationBell");
-  const dropdown = document.getElementById("notificationDropdown");
-  const badge = document.getElementById("notificationBadge");
-
   const profileName = document.getElementById("profileName");
   const postBtn = document.getElementById("postBtn");
   const postInput = document.getElementById("postInput");
@@ -38,76 +88,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const usersList = document.getElementById("usersList");
   const btnProfile = document.getElementById("btn-profile");
   const btnChat = document.getElementById("btn-chat");
-
-  // --- Utility functions ---
-  function createNotification(targetUser, fromUser, type, postId = null) {
-    if (!targetUser || targetUser === fromUser) return;
-    const allUsers = JSON.parse(localStorage.getItem("users")) || {};
-    if (!allUsers[targetUser])
-      allUsers[targetUser] = { ...allUsers[targetUser], notifications: [] };
-    if (!Array.isArray(allUsers[targetUser].notifications))
-      allUsers[targetUser].notifications = [];
-
-    const newNotification = {
-      id: Date.now(),
-      type,
-      fromUser,
-      postId,
-      read: false,
-      timestamp: new Date().toISOString(),
-    };
-
-    allUsers[targetUser].notifications.unshift(newNotification);
-    saveUsers(allUsers);
-  }
-
-  function setupNotifications() {
-    const allUsers = JSON.parse(localStorage.getItem("users")) || {};
-    const currentUser = allUsers[activeUser] || {};
-    const notifications = Array.isArray(currentUser.notifications)
-      ? currentUser.notifications
-      : [];
-
-    const unreadCount = notifications.filter((n) => !n.read).length;
-
-    if (badge) {
-      if (unreadCount > 0) {
-        badge.classList.add("show");
-        badge.textContent = unreadCount > 0 ? String(unreadCount) : "";
-      } else {
-        badge.classList.remove("show");
-        badge.textContent = "";
-      }
-    }
-
-    return { allUsers, currentUser, notifications, unreadCount };
-  }
-
-  if (bell && dropdown) {
-    bell.addEventListener("click", (e) => {
-      e.preventDefault();
-      dropdown.classList.toggle("show");
-
-      const { allUsers, currentUser, unreadCount } = setupNotifications();
-
-      if (dropdown.classList.contains("show") && unreadCount > 0) {
-        (currentUser.notifications || []).forEach((n) => (n.read = true));
-        allUsers[activeUser] = currentUser;
-        saveUsers(allUsers);
-
-        if (badge) {
-          setTimeout(() => badge.classList.remove("show"), 200);
-          badge.textContent = "";
-        }
-      }
-    });
-
-    document.addEventListener("click", (e) => {
-      if (!bell.contains(e.target) && !dropdown.contains(e.target)) {
-        dropdown.classList.remove("show");
-      }
-    });
-  }
 
   const getFollowing = (username) => users[username]?.following || [];
   const getFollowers = (username) => {
@@ -205,20 +185,6 @@ document.addEventListener("DOMContentLoaded", () => {
     updateProfileStats();
   };
 
-  function escapeHtml(str) {
-    return str.replace(/[&<>"'`]/g, (s) => {
-      const map = {
-        "&": "&amp;",
-        "<": "&lt;",
-        ">": "&gt;",
-        '"': "&quot;",
-        "'": "&#39;",
-        "`": "&#96;",
-      };
-      return map[s];
-    });
-  }
-
   const showUserListModal = (title, userList) => {
     if (!modal || !modalUserList || !modalTitle) return;
     modalTitle.textContent = title;
@@ -297,7 +263,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   };
 
-  // --- Posting (guarded) ---
+  // --- Event Listeners ---
   if (postBtn && postInput) {
     postBtn.addEventListener("click", () => {
       const text = postInput.value.trim();
@@ -307,15 +273,7 @@ document.addEventListener("DOMContentLoaded", () => {
         alert("Tulis status atau pilih gambar terlebih dahulu.");
         return;
       }
-
-      const newPost = {
-        id: Date.now(),
-        author: activeUser,
-        text,
-        imageUrl: null,
-        likes: [],
-        comments: [],
-      };
+      const newPost = { id: Date.now(), author: activeUser, text, imageUrl: null, likes: [], comments: [] };
 
       if (imageFile) {
         const reader = new FileReader();
@@ -352,12 +310,7 @@ document.addEventListener("DOMContentLoaded", () => {
           posts[postIndex].likes.splice(likedIndex, 1);
         } else {
           posts[postIndex].likes.push(activeUser);
-          createNotification(
-            posts[postIndex].author,
-            activeUser,
-            "like",
-            postId
-          );
+          createNotification(posts[postIndex].author, activeUser, "like", postId);
         }
         savePosts(posts);
         renderFeed();
@@ -369,17 +322,9 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!commentInput) return;
         const commentText = commentInput.value.trim();
         if (commentText) {
-          posts[postIndex].comments.push({
-            author: activeUser,
-            text: commentText,
-          });
+          posts[postIndex].comments.push({ author: activeUser, text: commentText });
           savePosts(posts);
-          createNotification(
-            posts[postIndex].author,
-            activeUser,
-            "comment",
-            postId
-          );
+          createNotification(posts[postIndex].author, activeUser, "comment", postId);
           commentInput.value = "";
           renderFeed();
         }
@@ -389,8 +334,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (target.classList.contains("follow-btn")) {
         const authorToFollow = posts[postIndex].author;
         if (!users[activeUser]) users[activeUser] = { following: [] };
-        const followingIndex =
-          users[activeUser].following.indexOf(authorToFollow);
+        const followingIndex = users[activeUser].following.indexOf(authorToFollow);
         if (followingIndex > -1) {
           users[activeUser].following.splice(followingIndex, 1);
         } else {
@@ -424,7 +368,6 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!followingList.includes(userToFollow)) {
           users[activeUser].following.push(userToFollow);
           saveUsers(users);
-
           showUserListModal("Followers", getFollowers(activeUser));
           updateProfileStats();
           renderUsersList();
@@ -446,13 +389,10 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  const closeModal = () => {
-    if (modal) modal.style.display = "none";
-  };
+  const closeModal = () => { if (modal) modal.style.display = "none"; };
   if (closeModalBtn) closeModalBtn.addEventListener("click", closeModal);
-  window.addEventListener("click", (e) => {
-    if (e.target === modal) closeModal();
-  });
+  window.addEventListener("click", (e) => { if (e.target === modal) closeModal(); });
+
   if (btnLogout)
     btnLogout.addEventListener("click", () => {
       localStorage.removeItem("activeUser");
@@ -471,51 +411,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (profileName) profileName.textContent = activeUser;
 
-  function updateAllProfilePictures(username, imageUrl) {
-    const profileHeaderImg = document.querySelector(".profile-header img");
-    if (profileHeaderImg && username === activeUser)
-      profileHeaderImg.src = imageUrl;
-
-    const createPostImg = document.querySelector(".create-post img");
-    if (createPostImg && username === activeUser) createPostImg.src = imageUrl;
-
-    document.querySelectorAll(".post-header img").forEach((img) => {
-      const postAuthor = img.closest(".post-header")?.querySelector("h3");
-      if (postAuthor && postAuthor.textContent === username) img.src = imageUrl;
-    });
-
-    document.querySelectorAll(".user-list-item img").forEach((img) => {
-      const userName = img
-        .closest(".user-list-item")
-        ?.querySelector(".user-name");
-      if (userName && userName.textContent === username) img.src = imageUrl;
-    });
-
-    document.querySelectorAll(".user-item img").forEach((img) => {
-      const maybeText = img.nextElementSibling;
-      if (maybeText && maybeText.textContent === username) img.src = imageUrl;
-    });
-  }
-
-  function checkAndUpdateProfilePictures() {
-    const profilePicUpdated = localStorage.getItem("profilePicUpdated");
-    if (profilePicUpdated === "true") {
-      const updatedUser = localStorage.getItem("updatedUser");
-      const updatedProfilePic = localStorage.getItem("updatedProfilePic");
-      if (updatedUser && updatedProfilePic) {
-        updateAllProfilePictures(updatedUser, updatedProfilePic);
-        localStorage.removeItem("profilePicUpdated");
-        localStorage.removeItem("updatedProfilePic");
-        localStorage.removeItem("updatedUser");
-      }
-    }
-  }
-
-  // --- Initial render / setup ---
   renderFeed();
   renderUsersList();
   setupNotifications();
-  checkAndUpdateProfilePictures();
 
   if (!users[activeUser]) {
     users[activeUser] = { following: [], notifications: [] };
